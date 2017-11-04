@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="tab_checkedout">Checked Out</string>
+    <string name="tab_favorites">Favorites</string>
+    <string name="tab_history">History</string>
+    <string name="btn_checkedout">Confirm Check Out</string>
+    <string name="btn_setreminder">Set Reminder</string>
+</resources>
