@@ -5,4 +5,36 @@
     <string name="tab_history">History</string>
     <string name="btn_checkedout">Confirm Check Out</string>
     <string name="btn_setreminder">Set Reminder</string>
+    <string name="title_activity_bookDetails">Book Details</string>
+    <string name="btn_searchISBN">Search ISBN</string>
+    <string name="btn_addManually">Add Manually</string>
+
+    <string name="baseURL">"https://www.googleapis.com/books/v1/"</string>
+    <string name="errorGettingISBN">Could not get ISBN</string>
+    <string name="isbnCannotBeEmpty">You must enter a valid ISBN</string>
+
+    <string name="Dismiss">Dismiss</string>
+
+    <string name="BookwithISBN">"Book with ISBN "</string>
+    <string name="BookNotFound">\"not found!\"</string>
+    <string name="bookTitleLabel">Title: </string>
+    <string name="bookISBNLabel">ISBN: </string>
+    <string name="bookPageCountLabel">Page Count: </string>
+    <string name="tryAddingIManually">Try adding book manually</string>
+    <string name="noDetector">Could not setup detector. Try adding the book manually or enter ISBN number</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="ok">OK</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="noISBNCaptured">No barcode captured, intent data is null. Try entering ISBN or book details manually</string>
+    <string name="isbnNotFound">The %1$s ISBN was not found. Try entering the book details manually.</string>
+    <string name="bookAuthors">"Author(s): "</string>
+    <string name="bookCategories">"Category: "</string>
+    <string name="bookDueDate">"Book Due By: "</string>
+    <string name="setReminder">Set reminder</string>
+    <string name="bookCheckedOutDate">"Book Checked Out On: "</string>
+    <string name="btnCheckOutText">Check Out</string>
+    <string name="btnSetReminderText">Set Reminder</string>
+
 </resources>

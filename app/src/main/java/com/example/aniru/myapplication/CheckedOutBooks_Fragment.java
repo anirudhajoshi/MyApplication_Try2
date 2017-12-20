@@ -2,6 +2,8 @@ package com.example.aniru.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -24,6 +28,15 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class CheckedOutBooks_Fragment extends Fragment {
 
+    private static final int MY_REQUEST_CODE = 100;
+
+    public void showDialogCaptureISBN() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new DialogCaptureISBN();
+
+        dialog.show(getFragmentManager(), "DialogCaptureISBN");
+    }
+
     public interface ClickListener {
         void onClick(View view, int position);
         void onLongClick(View view, int position);
@@ -31,6 +44,9 @@ public class CheckedOutBooks_Fragment extends Fragment {
 
     @BindView(R.id.rv_CheckedOutBookList)
     RecyclerView rv_CheckedOutBookList;
+
+    @BindView(R.id.fabAddBook)
+    FloatingActionButton fabAddBook;
 
     ArrayList<BookDetails_FB> mCheckedOutBooks = new ArrayList<BookDetails_FB>();
 
@@ -67,6 +83,14 @@ public class CheckedOutBooks_Fragment extends Fragment {
             public void onLongClick(View view, int position) {
             }
         }));
+
+        fabAddBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Toast.makeText(getContext(), "FAB clicked", Toast.LENGTH_SHORT).show();
+                showDialogCaptureISBN();
+            }
+        });
 
         return view;
     }

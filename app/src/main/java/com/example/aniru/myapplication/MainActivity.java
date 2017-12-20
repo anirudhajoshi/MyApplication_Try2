@@ -1,5 +1,6 @@
 package com.example.aniru.myapplication;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,25 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogCaptureISBN.OnCompleteListener {
+
+    @Override
+    public void onComplete(BookDetails_FB bookDetails_fb) {
+
+        // Create a bundle that has the BookDetails_FB object and pass it to the new book activity
+        Intent intent = new Intent(this, NewBookActivity.class);
+
+        intent.putExtra("NewBook", Parcels.wrap(bookDetails_fb));
+
+        startActivity(intent);
+    }
 
     public interface ClickListener {
         void onClick(View view, int position);
