@@ -5,7 +5,9 @@ package com.example.aniru.myapplication;
 
 import org.parceler.Parcel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -18,9 +20,9 @@ public class BookDetails_FB {
     String imageLink;
     String title;
 
-    Date bookCheckedOutDate;
+    String bookCheckedOutDate;
 
-    private Date bookDueDate = new Date();
+    String bookDueDate;
 
     private boolean setReminder = false;
 
@@ -34,7 +36,7 @@ public class BookDetails_FB {
 
     String summary;
 
-    private Date bookReturnedDate = new Date();
+    private String bookReturnedDate;
 
     private int numberOfRenewals = 0;
 
@@ -127,27 +129,33 @@ public class BookDetails_FB {
         this.summary = summary;
     }
 
-    public Date getBookCheckedOutDate() {
-        return bookCheckedOutDate;
+    public String getBookCheckedOutDate() {
+        /*SimpleDateFormat bookCheckedOutDateformat = new SimpleDateFormat("yyyy-MM-dd");
+        String bookCheckedOutDateFormat = bookCheckedOutDateformat.format(this.bookCheckedOutDate);*/
+        return this.bookCheckedOutDate;
     }
 
-    public void setBookCheckedOutDate(Date bookChecekdOutDate) {
-        bookCheckedOutDate = bookChecekdOutDate;
+    public void setBookCheckedOutDate(String bookCheckedOutDate) {
+        this.bookCheckedOutDate = bookCheckedOutDate;
     }
 
-    public Date getBookReturnedDate() {
+    public String getBookReturnedDate() {
+      /*  SimpleDateFormat bookReturnedDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String bookReturnedDate = bookReturnedDateFormat.format(this.bookReturnedDate);*/
         return bookReturnedDate;
     }
 
-    public void setBookReturnedDate(Date bookReturnedDate) {
+    public void setBookReturnedDate(String bookReturnedDate) {
         this.bookReturnedDate = bookReturnedDate;
     }
 
-    public Date getBookDueDate() {
+    public String getBookDueDate() {
+        /*SimpleDateFormat bookDueDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String bookDueDate = bookDueDateFormat.format(bookReturnedDate);*/
         return bookDueDate;
     }
 
-    public void setBookDueDate(Date bookDueDate) {
+    public void setBookDueDate(String bookDueDate) {
         this.bookDueDate = bookDueDate;
     }
 

@@ -36,5 +36,6 @@
     <string name="bookCheckedOutDate">"Book Checked Out On: "</string>
     <string name="btnCheckOutText">Check Out</string>
     <string name="btnSetReminderText">Set Reminder</string>
+    <string name="bookAlreadyCheckedOutText">You have already checked out this book</string>
 
 </resources>

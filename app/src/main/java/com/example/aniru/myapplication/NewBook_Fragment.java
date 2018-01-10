@@ -19,6 +19,8 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -31,9 +33,12 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Created by aniru on 11/21/2017.
@@ -75,8 +80,8 @@ public class NewBook_Fragment extends Fragment  {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference myRef = mDatabase.getDatabase().getReference("checkedoutBook");
     private DatabaseReference mBookDetailDatabaseReference;
     private ValueEventListener mBooksListener;
     private ChildEventListener mChildEventListener;
@@ -100,7 +105,16 @@ public class NewBook_Fragment extends Fragment  {
 
             bookImageURL = mCheckedOutBook.getImageLink();
             et_Title.setText(mCheckedOutBook.getTitle());
-            Date dtCheckedOutDate = mCheckedOutBook.getBookCheckedOutDate();
+
+            SimpleDateFormat bookCheckedOutDateformat = new SimpleDateFormat("MM-dd-yyyy");
+            Date dtCheckedOutDate = new Date();
+            try {
+                dtCheckedOutDate = bookCheckedOutDateformat.parse(mCheckedOutBook.getBookCheckedOutDate());
+            }
+            catch (Exception e)
+            {
+                Timber.d(e.getMessage());
+            }
             tv_BookCheckedOutDate.setText(dtCheckedOutDate.toString());
 
             Date dtDueDate = new Date();
@@ -151,9 +165,15 @@ public class NewBook_Fragment extends Fragment  {
     private void onCheckedOut() {
         // Toast.makeText(getContext(), "OnCheckedOut clicked", Toast.LENGTH_SHORT).show();
 
+        // FirebaseAuth.getInstance().signOut();
+
         // Check if user is authenticated
         if( !IsUserAuthenticated() ){
             RegisterUser();
+        }
+        else
+        {
+            SaveCheckedOutBookToFB();
         }
     }
 
@@ -188,7 +208,7 @@ public class NewBook_Fragment extends Fragment  {
         if( requestCode==RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
-                Toast.makeText(getContext(), "Sign In Ok", Toast.LENGTH_SHORT).show();
+                SaveCheckedOutBookToFB();
 
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getContext(), "Sign In Canceled", Toast.LENGTH_SHORT).show();
@@ -196,6 +216,41 @@ public class NewBook_Fragment extends Fragment  {
             else{
                 Toast.makeText(getContext(), response.describeContents(), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void SaveCheckedOutBookToFB() {
+        try {
+            mDatabase.child("CheckedOutBooks").orderByChild("isbn").equalTo(mCheckedOutBook.getIsbn()).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if( dataSnapshot.getChildrenCount()==0 )
+                                mDatabase.child("CheckedOutBooks").push().setValue(mCheckedOutBook);
+                            else
+                                Toast.makeText(getContext(), getResources().getText(R.string.bookAlreadyCheckedOutText), Toast.LENGTH_SHORT).show();
+
+/*
+                            for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                                String key = ds.getKey();
+                                if( key!=null )
+                                    Toast.makeText(getContext(), getResources().getText(R.string.bookAlreadyCheckedOutText), Toast.LENGTH_SHORT).show();
+                                else
+                                    mDatabase.child("CheckedOutBooks").push().setValue(mCheckedOutBook);
+                            }
+*/
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Timber.d("IsBookCheckedOut:onCancelled", databaseError.toException());
+                        }
+                    });
+
+        }
+        catch (Exception e){
+            Timber.d(e.getMessage());
         }
     }
 

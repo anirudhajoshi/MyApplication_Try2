@@ -222,12 +222,12 @@ public class DialogCaptureISBN extends DialogFragment {
                             String bookCheckedOutDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
                             String bookCheckedOutDate_f1 = new SimpleDateFormat("E, M dd yyyy").format(Calendar.getInstance().getTime());
 
-                            mBookDetails.setBookCheckedOutDate(Date.valueOf(bookCheckedOutDate));
+                            mBookDetails.setBookCheckedOutDate(bookCheckedOutDate);
                             // Get book renewals (set to 0 first time)
                             int bookRenewals = 0;   // For now
                             // Get book returned date (when user taps and selects checked in)
                             String bookReturnedDate  = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-                            mBookDetails.setBookReturnedDate(Date.valueOf(bookReturnedDate));
+                            mBookDetails.setBookReturnedDate(bookReturnedDate);
                             // Get book due date (current date + x days (or weeks) as specified in settings
                             java.util.Date dtBookCheckedOutDate = Calendar.getInstance().getTime();
                             int checkOutPeriod = getCheckOutPeriod();
@@ -236,7 +236,7 @@ public class DialogCaptureISBN extends DialogFragment {
                             c.setTime(dt);
                             c.add(Calendar.DATE, checkOutPeriod);
                             java.util.Date dtBookDueDate = c.getTime();
-                            mBookDetails.setBookDueDate(dtBookDueDate);
+                            mBookDetails.setBookDueDate(dtBookDueDate.toString());
                             break;
                         }
 
